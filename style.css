@@ -1,0 +1,50 @@
+body {
+  background-color: rgba(0, 0, 64, 0.975);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-family: "Press Start 2P";
+  color: rgb(242, 242, 134);
+  font-size: 3rem;
+  text-align: center;
+}
+
+.container {
+  display: grid;
+  grid-template: 200px 200px / 200px 200px;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.tile {
+  border-radius: 2rem;
+  border: 0.8rem solid black;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.flasher {
+  box-shadow: 0 0 30px rgba(231, 216, 216, 0.881);
+  transform: scale(0.95);
+}
