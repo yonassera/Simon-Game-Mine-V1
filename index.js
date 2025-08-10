@@ -1,27 +1,26 @@
-//convert the code into jquery
-//consider including start button
-//also make the visual similar to the real one
-// may be store max in local and diplay on the board, difficulty by varying the speed
-
 function startTheGame() {
   return randFlasher();
 }
-document.addEventListener("keypress", startTheGame);
+$(".btn").on("click", startTheGame);
 
 var arrayCollection = [];
 var counter = -1;
 var arrayLength;
 var level = 1;
+var highscore = 0;
+
+$(".sa").hide();
 
 function randFlasher() {
-  document.removeEventListener("keypress", startTheGame);
+  $(".btn").off("click", startTheGame);
+  $(".sa").hide();
 
   let randVal = Math.floor(Math.random() * 4) + 1;
-  document.querySelector("h1").textContent = "Level " + level;
+  $(".level").text("Level:" + level);
 
-  document.querySelector("#b" + randVal).classList.add("flasher");
+  $("#b" + randVal).addClass("flasher");
   setTimeout(function () {
-    document.querySelector("#b" + randVal).classList.remove("flasher");
+    $("#b" + randVal).removeClass("flasher");
   }, 200);
 
   let audFlashed = new Audio("./sounds/" + randVal + ".mp3");
@@ -32,18 +31,15 @@ function randFlasher() {
   level++;
 }
 
-let temp = document.querySelectorAll(".tile");
-for (var i = 0; i < temp.length; i++) {
-  temp[i].addEventListener("click", listenKeyPress);
-}
+$(".tile").on("click", listenKeyPress);
 
 function listenKeyPress() {
   let clickedID = this.id;
   let clickedValue = clickedID.slice(1);
 
-  document.querySelector("#" + clickedID).classList.add("flasher");
+  $("#" + clickedID).addClass("flasher");
   setTimeout(function () {
-    document.querySelector("#" + clickedID).classList.remove("flasher");
+    $("#" + clickedID).removeClass("flasher");
   }, 200);
 
   let audClicked = new Audio("./sounds/" + clickedID.slice(1) + ".mp3");
@@ -64,24 +60,35 @@ function check(value, Counter) {
       }, 1000);
     }
   } else {
-    level = 1;
-    counter = -1;
-    arrayCollection = [];
     return displayError();
   }
 }
 
 function displayError() {
-  document.querySelector("body").style.backgroundColor = "red";
+  if (level > highscore) {
+    highscore = level - 2;
+  }
+
+  if (highscore >= 0) $(".hs").text("High score:" + highscore);
+
+  level = 1;
+  counter = -1;
+  arrayCollection = [];
+
+  $(".tile").off("click", listenKeyPress); // to prevent multiple flashes
+  $(".btn").off("click", startTheGame);
+
+  $("body").css("backgroundColor", "red");
 
   setTimeout(function () {
-    document.querySelector("body").style.backgroundColor =
-      "rgba(0, 0, 64, 0.975)";
+    $("body").css("backgroundColor", "black");
   }, 200);
 
   let audError = new Audio("./sounds/wrong.mp3");
   audError.play();
 
-  document.querySelector("h1").textContent = "Press any key to begin again!";
-  document.addEventListener("keypress", startTheGame);
+  $(".sa").show();
+
+  $(".tile").on("click", listenKeyPress);
+  $(".btn").on("click", startTheGame);
 }
