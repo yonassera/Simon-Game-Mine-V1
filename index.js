@@ -7,8 +7,10 @@ var highscore = 0;
 
 function startTheGame() {
   gameStarted = true;
+  $(".tile").on("click", listenKeyPress);
   return randFlasher();
 }
+
 $(".btn").on("click", startTheGame);
 
 $(".sa").hide();
@@ -33,9 +35,6 @@ function randFlasher() {
   level++;
 }
 
-if(gameStarted){
-$(".tile").on("click", listenKeyPress);
-}
 
 function listenKeyPress() {
   let clickedID = this.id;
@@ -93,9 +92,7 @@ function displayError() {
 
   $(".sa").show();
 
-  $(".tile").on("click", listenKeyPress);
   $(".btn").on("click", startTheGame);
 }
-
 
 
