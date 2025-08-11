@@ -1,13 +1,15 @@
-function startTheGame() {
-  return randFlasher();
-}
-$(".btn").on("click", startTheGame);
-
+var gameStarted = false;
 var arrayCollection = [];
 var counter = -1;
 var arrayLength;
 var level = 1;
 var highscore = 0;
+
+function startTheGame() {
+  gameStarted = true;
+  return randFlasher();
+}
+$(".btn").on("click", startTheGame);
 
 $(".sa").hide();
 
@@ -47,7 +49,9 @@ function listenKeyPress() {
 
   counter++;
 
-  return check(clickedValue, counter);
+  if(gameStarted){
+      return check(clickedValue, counter);
+  }
 }
 
 function check(value, Counter) {
@@ -92,3 +96,4 @@ function displayError() {
   $(".tile").on("click", listenKeyPress);
   $(".btn").on("click", startTheGame);
 }
+
