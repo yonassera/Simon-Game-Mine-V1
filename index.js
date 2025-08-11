@@ -33,7 +33,9 @@ function randFlasher() {
   level++;
 }
 
+if(gameStarted){
 $(".tile").on("click", listenKeyPress);
+}
 
 function listenKeyPress() {
   let clickedID = this.id;
@@ -48,10 +50,8 @@ function listenKeyPress() {
   audClicked.play();
 
   counter++;
-
-  if(gameStarted){
+  
       return check(clickedValue, counter);
-  }
 }
 
 function check(value, Counter) {
@@ -96,4 +96,5 @@ function displayError() {
   $(".tile").on("click", listenKeyPress);
   $(".btn").on("click", startTheGame);
 }
+
 
